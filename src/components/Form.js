@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Form = ({ inputText, setInputText, todos, setToDos, setStatus }) => {
+  const [add, setAdd] = useState(true);
   const inputTextHandler = (e) => {
     console.log(e.target.value);
+    if (e.target.value != '') {
+      setAdd(false);
+    } else {
+      setAdd(true);
+    }
     setInputText(e.target.value);
   };
   const submitToDoHandler = (e) => {
@@ -12,6 +18,7 @@ const Form = ({ inputText, setInputText, todos, setToDos, setStatus }) => {
       { text: inputText, completed: false, id: Math.random() * 1000 }
     ]);
     setInputText('');
+    setAdd(true);
   };
   const statusHandler = (e) => {
     console.log(e.target.value);
@@ -25,7 +32,12 @@ const Form = ({ inputText, setInputText, todos, setToDos, setStatus }) => {
         type='text'
         className='todo-input'
       />
-      <button onClick={submitToDoHandler} className='todo-button' type='submit'>
+      <button
+        onClick={submitToDoHandler}
+        className='todo-button'
+        type='submit'
+        disabled={add}
+      >
         <i className='fas fa-plus-square'></i>
       </button>
       <div className='select'>
